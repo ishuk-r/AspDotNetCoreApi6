@@ -20,7 +20,7 @@ namespace AspDotNetCoreApi6.Models.ViewModels
         [RegularExpression("^[0-9]*$", ErrorMessage = "Only numbers are allowed")]
         public string? Mobile { get; set; }
         [Required]
-        [StringLength(8, ErrorMessage = "Password should be atleast of 8 characters including one lower case letter, one upper case letter, special character and one number", MinimumLength = 8)]
+        [StringLength(20, ErrorMessage = "Password should be minimum of 8 characters including one lower case letter, one upper case letter, special character and one number", MinimumLength = 8)]
         [RegularExpression("^.*(?=.{8,})(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!*@#$%^&+=]).*$")]
         public string? Password { get; set; }
     }
