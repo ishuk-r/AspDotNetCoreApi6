@@ -14,6 +14,11 @@ namespace AspDotNetCoreApi6.Services
             _config = config;
         }
 
+        /// <summary>
+        /// Generate JWT token based on current loggedIn user
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
         public string GetToken(string userName)
         {
             var issuer = _config.GetValue<string>("Jwt:Issuer");

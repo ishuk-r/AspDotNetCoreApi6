@@ -5,6 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AspDotNetCoreApi6.Controllers
 {
+    /// <summary>
+    /// It is an api controller to handle basic crud operations for movies
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
@@ -17,6 +20,10 @@ namespace AspDotNetCoreApi6.Controllers
             _movieContext = movieContext;
         }
 
+        /// <summary>
+        /// To get all movies
+        /// </summary>
+        /// <returns></returns>
         // api/movies
         [HttpGet("GetMovies")]
         public async Task<ActionResult<IEnumerable<Movie>>> GetMovies()
@@ -24,6 +31,11 @@ namespace AspDotNetCoreApi6.Controllers
             return await _movieContext.Movies.ToListAsync();
         }
 
+        /// <summary>
+        /// To get a single movie based on Id
+        /// </summary>
+        /// <param name="id">Movie Id</param>
+        /// <returns></returns>
         // api/movies/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Movie>> GetMovieById(int id)
@@ -38,6 +50,11 @@ namespace AspDotNetCoreApi6.Controllers
             return movie;
         }
 
+        /// <summary>
+        /// To add a new movie
+        /// </summary>
+        /// <param name="movie">request payload, which will contain movie data</param>
+        /// <returns></returns>
         [HttpPost("CreateMovie")]
         public async Task<ActionResult<Movie>> AddMovie(Movie movie)
         {
@@ -47,6 +64,12 @@ namespace AspDotNetCoreApi6.Controllers
             return CreatedAtAction(nameof(GetMovieById), new { id = movie.Id }, movie);
         }
 
+        /// <summary>
+        /// To update an existing movie
+        /// </summary>
+        /// <param name="id">This id will be use to get movie object which needs to be updated</param>
+        /// <param name="movie">This movie object will contain updated movie data</param>
+        /// <returns></returns>
         [HttpPut("UpdateMovie/{id}")]
         public async Task<ActionResult> UpdateMovie(int id, Movie movie)
         {
@@ -76,11 +99,21 @@ namespace AspDotNetCoreApi6.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Helper method to check that movie exists or not
+        /// </summary>
+        /// <param name="id">movie id</param>
+        /// <returns></returns>
         private bool MovieExists(int id)
         {
             return _movieContext.Movies.Any(x => x.Id == id);
         }
 
+        /// <summary>
+        /// To delete already existing movie
+        /// </summary>
+        /// <param name="id">movie id</param>
+        /// <returns></returns>
         [HttpDelete("DeleteMovie/{id}")]
         public async Task<ActionResult> DeleteMovie(int id)
         {

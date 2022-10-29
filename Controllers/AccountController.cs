@@ -8,12 +8,15 @@ using System.Net;
 
 namespace AspDotNetCoreApi6.Controllers
 {
+    /// <summary>
+    /// This controller manages User Registration and Login functionality
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly IUser _userService;
-        private readonly IConfiguration _config;
+        private readonly IUser _userService;// user service instance
+        private readonly IConfiguration _config;// app config service instance
 
         public AccountController(IUser userService, IConfiguration config)
         {
@@ -21,6 +24,11 @@ namespace AspDotNetCoreApi6.Controllers
             _config = config;
         }
 
+        /// <summary>
+        /// To register a user
+        /// </summary>
+        /// <param name="user">user object which contains new user data</param>
+        /// <returns></returns>
         [HttpPost("Register")]
         public async Task<IActionResult> Register(UserModel user)
         {
@@ -33,6 +41,11 @@ namespace AspDotNetCoreApi6.Controllers
             return StatusCode(500);
         }
 
+        /// <summary>
+        /// For user login and provide token
+        /// </summary>
+        /// <param name="login">object contains login credentials data</param>
+        /// <returns></returns>
         [HttpPost("Login")]
         public async Task<IActionResult> Login(Login login)
         {

@@ -15,6 +15,11 @@ namespace AspDotNetCoreApi6.Services
             _movieContext = movieContext;
         }
 
+        /// <summary>
+        /// To verify user's authenticity
+        /// </summary>
+        /// <param name="loginModel"></param>
+        /// <returns></returns>
         public async Task<Status> Login(Login loginModel)
         {
             var user = await _movieContext.Users.FirstOrDefaultAsync(x => x.Email == loginModel.UserName);
@@ -27,7 +32,11 @@ namespace AspDotNetCoreApi6.Services
             return Status.LoginSuccess;
         }
 
-
+        /// <summary>
+        /// To add new user in database
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public async Task<Status> RegisterUser(UserModel user)
         {
             if (user == null) return Status.RegistrationFailed;
