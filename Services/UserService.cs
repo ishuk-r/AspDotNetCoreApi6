@@ -20,8 +20,9 @@ namespace AspDotNetCoreApi6.Services
             var user = await _movieContext.Users.FirstOrDefaultAsync(x => x.Email == loginModel.UserName);
             if (user == null) return Status.UserNotFound;
 
-            var decodedPassword = PasswordHelper.DecodeFrom64(user.Password);
-            if (loginModel.Passsword != decodedPassword) return Status.PasswordNotMatch;
+            //var decodedPassword = PasswordHelper.DecodeFrom64(user.Password);
+            //if (loginModel.Passsword != decodedPassword) return Status.PasswordNotMatch;
+            if (!BCrypt.Net.BCrypt.Verify(loginModel.Password, user.Password)) return Status.PasswordNotMatch;
 
             return Status.LoginSuccess;
         }
@@ -34,7 +35,8 @@ namespace AspDotNetCoreApi6.Services
             var isEmailAlreadyExist = await _movieContext.Users.AnyAsync(x => x.Email == user.Email);
             if (isEmailAlreadyExist) return Status.EmailAlreadyExist;
 
-            user.Password = PasswordHelper.EncodePasswordToBase64(user.Password);
+            //user.Password = PasswordHelper.EncodePasswordToBase64(user.Password);
+            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
 
             User newUser = new User()
             {
